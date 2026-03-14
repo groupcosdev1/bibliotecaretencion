@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GroupCOS | Biblioteca Virtual | Angie Hernandez</title>
+  <title>GroupCOS | Biblioteca Virtual</title>
   <style>
     :root{
       --red:#c8102e;
@@ -12,7 +12,6 @@
       --sky:#f7ebee;
       --gold:#f5c857;
       --bg:#f1f2f4;
-
       --card:#ffffff;
       --line:#e5e9f2;
       --text:#1f2937;
@@ -216,6 +215,16 @@
             <span class="pill gray">Próximamente</span>
           </div>
         </div>
+        <div class="card menu-card" onclick="openTrack('conectividad')">
+          <div class="menu-icon">🤝</div>
+          <h3>Conectividad</h3>
+          <p>Espacio para conectarte virtualmente con tu formador, supervisor, analista o equipo de Backoffice.</p>
+          <div class="pill-row">
+            <span class="pill red">Formación</span>
+            <span class="pill blue">Supervisores</span>
+            <span class="pill gray">Backoffice</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -229,6 +238,19 @@
           <button class="back-btn" id="listBackBtn" type="button">← Volver</button>
         </div>
         <div class="list" id="listWrap"></div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-conectividad">
+      <div class="card panel">
+        <div class="panel-head">
+          <div>
+            <h2 id="conectTitle">Conectividad</h2>
+            <p id="conectSubtitle">Selecciona con quién deseas conectarte.</p>
+          </div>
+          <button class="back-btn" id="conectBackBtn" type="button" onclick="goHome()">← Volver</button>
+        </div>
+        <div id="conectContent"></div>
       </div>
     </section>
 
@@ -701,7 +723,8 @@
     const screens = {
       home: document.getElementById('screen-home'),
       list: document.getElementById('screen-list'),
-      viewer: document.getElementById('screen-viewer')
+      viewer: document.getElementById('screen-viewer'),
+      conectividad: document.getElementById('screen-conectividad')
     };
     const breadcrumbs = document.getElementById('breadcrumbs');
     const listTitle = document.getElementById('listTitle');
@@ -779,6 +802,7 @@
       currentPath = [track];
       if (track === 'iniciales') return showInitiales();
       if (track === 'continuas') return showContinuasYears();
+      if (track === 'conectividad') return showConectividad();
       return showPreturnos();
     };
 
@@ -1015,6 +1039,123 @@
       listBackBtn.onclick = goHome;
       listWrap.innerHTML = comingSoonHTML('Aquí luego podrás agregar años, meses y módulos de preturnos.');
     }
+
+    const conectividadData = [
+      {
+        id: 'formacion',
+        title: 'Reúnete con Formación',
+        icon: '🎓',
+        color: '#fff2f3',
+        link: 'https://teams.microsoft.com/l/meetup-join/19%3ameeting_N2JjZDIxNjctN2RkZi00NWUzLWIyMDktZjhjZDdkNzYwMzYx%40thread.v2/0?context=%7b%22Tid%22%3a%2211c1ccce-c4e7-4a3e-94ba-ace29e7d8baa%22%2c%22Oid%22%3a%22c9980cdb-80a6-496d-98be-54a005baa3e0%22%7d',
+        personas: [
+          'Erica Tatiana Méndez Ortiz',
+          'Angie Alexandra Hernández Alfonso',
+          'Helen Yuliana Galindo Ortiz',
+          'Víctor Daniel Delgado Restrepo'
+        ]
+      },
+      {
+        id: 'analistas',
+        title: 'Reúnete con Analistas',
+        icon: '📊',
+        color: '#eef6ff',
+        link: 'https://teams.microsoft.com/l/meetup-join/19%3ameeting_OGFiNThmMDgtZDZiOS00MDUyLTllNmUtYjdkZmRkM2M1MjJl%40thread.v2/0?context=%7b%22Tid%22%3a%2211c1ccce-c4e7-4a3e-94ba-ace29e7d8baa%22%2c%22Oid%22%3a%22c9980cdb-80a6-496d-98be-54a005baa3e0%22%7d',
+        personas: [
+          'Henry José Alvillar Morán',
+          'Kleimary Angely Pinto Colla',
+          'Jhoana Lizeth Torres Hurtado',
+          'Cristian Ricardo Torres Unate',
+          'Juan Sebastián Mosquera Rodríguez'
+        ]
+      },
+      {
+        id: 'supervisores',
+        title: 'Reúnete con tu Supervisor',
+        icon: '👤',
+        color: '#f0fdf4',
+        link: 'https://teams.microsoft.com/l/meetup-join/19%3ameeting_ODI0NmVjN2QtMzdiMS00YzIxLTgwYTItM2NjNDYyZjUyMzM3%40thread.v2/0?context=%7b%22Tid%22%3a%2211c1ccce-c4e7-4a3e-94ba-ace29e7d8baa%22%2c%22Oid%22%3a%22c9980cdb-80a6-496d-98be-54a005baa3e0%22%7d',
+        personas: [
+          'Angie Julieth Ramírez Ramírez',
+          'Douglas Felipe Hernández Abril',
+          'Heidy Rocío Olarte Garavito',
+          'Nicole Danniela Guzmán García',
+          'Natalia Andrea Camen Herrera',
+          'Yésica Lorena Arévalo Suárez',
+          'Andrés Felipe Peñaloza Díaz',
+          'Jeisson Armando Medina Cañón',
+          'Jaime Ariel Cardona Reina',
+          'Andrés Felipe Mendoza Simbaqueba',
+          'Cristian Camilo Duarte Lemus',
+          'Jhon Gilberto Gómez Muñoz',
+          'María Del Pilar Marín Lozano'
+        ]
+      },
+      {
+        id: 'backoffice',
+        title: 'Reúnete con Backoffice',
+        icon: '🖥️',
+        color: '#fffbeb',
+        link: 'https://teams.microsoft.com/l/meetup-join/19%3ameeting_OTg3NTkzNWMtNjI1Yy00ZjcyLTg0OTQtMjE1MTg2NTY1MDhk%40thread.v2/0?context=%7b%22Tid%22%3a%2211c1ccce-c4e7-4a3e-94ba-ace29e7d8baa%22%2c%22Oid%22%3a%22c9980cdb-80a6-496d-98be-54a005baa3e0%22%7d',
+        personas: [
+          'Ronald Bastidas Parada',
+          'David Santiago Pérez Cruz',
+          'Leidy Valentina Virguez Castro',
+          'Hernán Andrés Peña Ortiz',
+          'Karen Johana Farieta Hernández',
+          'Camila Alejandra Ramírez Ospina',
+          'Andrés Felipe Ramos Molano'
+        ]
+      }
+    ];
+
+    function showConectividad(){
+      setScreen('conectividad');
+      setBreadcrumbs(['Inicio','Conectividad']);
+      document.getElementById('conectTitle').textContent = 'Conectividad';
+      document.getElementById('conectSubtitle').textContent = 'Selecciona con quién deseas conectarte.';
+      document.getElementById('conectBackBtn').onclick = goHome;
+      const content = document.getElementById('conectContent');
+      content.innerHTML = `
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:6px">
+          ${conectividadData.map(sec => `
+            <div class="card menu-card" onclick="openConectSection('${sec.id}')">
+              <div style="position:absolute;right:-30px;bottom:-30px;width:100px;height:100px;background:${sec.color};border-radius:50%;opacity:.6"></div>
+              <div class="menu-icon">${sec.icon}</div>
+              <h3>${escapeHtml(sec.title)}</h3>
+              <p>${sec.personas.length} persona${sec.personas.length>1?'s':''} disponible${sec.personas.length>1?'s':''}</p>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    window.openConectSection = (id) => {
+      const sec = conectividadData.find(s => s.id === id);
+      if (!sec) return;
+      setScreen('conectividad');
+      setBreadcrumbs(['Inicio','Conectividad', sec.title]);
+      const content = document.getElementById('conectContent');
+      document.getElementById('conectTitle').textContent = sec.title;
+      document.getElementById('conectSubtitle').textContent = 'Equipo disponible para reunirse contigo.';
+      document.getElementById('conectBackBtn').onclick = showConectividad;
+      content.innerHTML = `
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:6px">
+          ${sec.personas.map(p => `
+            <a href="${sec.link}" target="_blank" rel="noopener noreferrer" class="list-item" style="text-decoration:none">
+              <div class="li-left">
+                <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#8f1023,#c8102e);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px;flex:none">${escapeHtml(p.trim()[0])}</div>
+                <div>
+                  <div class="li-title" style="font-size:15px">${escapeHtml(p)}</div>
+                  <div class="li-desc" style="font-size:12px">Clic para unirte a la reunión 🟣</div>
+                </div>
+              </div>
+            </a>
+          `).join('')}
+        </div>
+      `;
+    };
+
+    window.showConectividad = showConectividad;
 
     function comingSoonHTML(msg){
       return `
@@ -1441,9 +1582,12 @@
         showStatus('La primera recuperación ya fue enviada anteriormente.', false);
         return;
       }
+      // Deshabilitar botón inmediatamente para evitar doble envío
+      sendBtn.disabled = true;
+      showStatus('Enviando... por favor espera.', true);
 
       const person = mode === 'recovery' ? (status.person || lastSubmittedPerson || getPerson()) : getPerson();
-      if (!validatePerson(person)) return;
+      if (!validatePerson(person)) { sendBtn.disabled = false; statusBox.style.display='none'; return; }
       const assessment = mode === 'recovery' ? currentModule.recovery : currentModule.certification;
       const ev = evaluateQuiz(true, assessment);
       const idRegistro = mode === 'recovery' ? ('REC-' + Date.now()) : ('REG-' + Date.now());
@@ -1469,6 +1613,8 @@
         ? `<strong>Resultado primera recuperación:</strong><br>Puntaje: <strong>${ev.score}</strong><br>Correctas: <strong>${ev.correct}</strong> de <strong>${ev.total}</strong><br>Estado: <strong>${ev.passed ? 'APROBADO' : 'NO APROBADO'}</strong>`
         : `<strong>Resultado certificación inicial:</strong><br>Puntaje: <strong>${ev.score}</strong><br>Correctas: <strong>${ev.correct}</strong> de <strong>${ev.total}</strong><br>Estado: <strong>${ev.passed ? 'APROBADO' : 'NO APROBADO'}</strong>`;
       lastSubmittedPerson = person;
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Enviando…';
       try {
         const response = await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
@@ -1521,9 +1667,13 @@
           }
           applyModuleAvailability();
         } else {
+          sendBtn.disabled = false;
+          sendBtn.textContent = 'Enviar evaluación';
           showStatus('La hoja respondió con error: ' + textResp, false);
         }
       } catch (error) {
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Enviar evaluación';
         showStatus('No se pudo enviar el resultado. Intenta nuevamente. Detalle: ' + error.message, false);
       }
     }
@@ -1660,6 +1810,8 @@
         respuestasEncuesta,
         observacion
       };
+      sendSurveyBtn.disabled = true;
+      sendSurveyBtn.textContent = 'Enviando…';
       try {
         const response = await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
@@ -1674,12 +1826,15 @@
             surveySentAt: new Date().toISOString()
           });
           showStatus('Gracias. La encuesta fue enviada correctamente.', true);
-          sendSurveyBtn.disabled = true;
           applyModuleAvailability();
         } else {
+          sendSurveyBtn.disabled = false;
+          sendSurveyBtn.textContent = 'Enviar encuesta';
           showStatus('La hoja respondió con error al enviar la encuesta: ' + text, false);
         }
       } catch (error) {
+        sendSurveyBtn.disabled = false;
+        sendSurveyBtn.textContent = 'Enviar encuesta';
         showStatus('No se pudo enviar la encuesta. Intenta nuevamente. Detalle: ' + error.message, false);
       }
     }
@@ -1724,6 +1879,7 @@
       <button class="quick-menu-btn" type="button" onclick="openTrack('iniciales'); closeQuickMenu();">Iniciales</button>
       <button class="quick-menu-btn" type="button" onclick="openTrack('continuas'); closeQuickMenu();">Continuas</button>
       <button class="quick-menu-btn" type="button" onclick="openTrack('preturnos'); closeQuickMenu();">Preturnos</button>
+      <button class="quick-menu-btn" type="button" onclick="openTrack('conectividad'); closeQuickMenu();">Conectividad</button>
     </div>
     <button class="quick-menu-fab" id="quickMenuFab" type="button" aria-label="Abrir menú">☰</button>
   </div>

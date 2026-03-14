@@ -225,6 +225,27 @@
             <span class="pill gray">Backoffice</span>
           </div>
         </div>
+        <div class="card menu-card" onclick="openTrack('simuladores')">
+          <div class="menu-icon">🖥️</div>
+          <h3>Simuladores</h3>
+          <p>Practica los aplicativos en entornos simulados interactivos.</p>
+          <div class="pill-row">
+            <span class="pill red">AC</span>
+            <span class="pill blue">DIME</span>
+            <span class="pill gray">RR</span>
+            <span class="pill red">+14</span>
+          </div>
+        </div>
+        <div class="card menu-card" onclick="openTrack('herramientas')">
+          <div class="menu-icon">🧰</div>
+          <h3>Caja de Herramientas</h3>
+          <p>Calculadoras, formularios, códigos, links y el asistente virtual Nexus.</p>
+          <div class="pill-row">
+            <span class="pill red">Calculadoras</span>
+            <span class="pill blue">Links</span>
+            <span class="pill gray">Nexus</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -251,6 +272,47 @@
           <button class="back-btn" id="conectBackBtn" type="button" onclick="goHome()">← Volver</button>
         </div>
         <div id="conectContent"></div>
+      </div>
+    </section>
+
+
+    <section class="screen" id="screen-herramientas">
+      <div class="card panel">
+        <div class="panel-head">
+          <div>
+            <h2>🧰 Caja de Herramientas</h2>
+            <p>Recursos de consulta rápida para tu gestión diaria.</p>
+          </div>
+          <button class="back-btn" type="button" onclick="goHome()">← Volver</button>
+        </div>
+        <div id="herramientasContent"></div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-simuladores">
+      <div class="card panel">
+        <div class="panel-head">
+          <div>
+            <h2 id="simTitle">Simuladores</h2>
+            <p id="simSubtitle">Selecciona el aplicativo que deseas practicar.</p>
+          </div>
+          <button class="back-btn" id="simBackBtn" type="button" onclick="goHome()">← Volver</button>
+        </div>
+        <div id="simContent"></div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-sim-viewer">
+      <div class="card panel" style="margin-top:24px">
+        <div class="panel-head">
+          <div><h2 id="simViewerTitle">Simulador</h2></div>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <button class="back-btn" id="simViewerBackBtn" type="button">← Volver</button>
+          </div>
+        </div>
+        <div id="simIframeWrap" style="border:1px solid var(--line);border-radius:20px;overflow:hidden;background:#f8fafc">
+          <iframe id="simIframe" src="" style="width:100%;height:75vh;border:none;display:block" allowfullscreen></iframe>
+        </div>
       </div>
     </section>
 
@@ -724,7 +786,10 @@
       home: document.getElementById('screen-home'),
       list: document.getElementById('screen-list'),
       viewer: document.getElementById('screen-viewer'),
-      conectividad: document.getElementById('screen-conectividad')
+      conectividad: document.getElementById('screen-conectividad'),
+      simuladores: document.getElementById('screen-simuladores'),
+      simViewer: document.getElementById('screen-sim-viewer'),
+      herramientas: document.getElementById('screen-herramientas')
     };
     const breadcrumbs = document.getElementById('breadcrumbs');
     const listTitle = document.getElementById('listTitle');
@@ -803,6 +868,8 @@
       if (track === 'iniciales') return showInitiales();
       if (track === 'continuas') return showContinuasYears();
       if (track === 'conectividad') return showConectividad();
+      if (track === 'simuladores') return showSimuladores();
+      if (track === 'herramientas') return showHerramientas();
       return showPreturnos();
     };
 
@@ -1107,6 +1174,274 @@
         ]
       }
     ];
+
+    function showHerramientas(){
+      setScreen('herramientas');
+      setBreadcrumbs(['Inicio','Caja de Herramientas']);
+      const content = document.getElementById('herramientasContent');
+      content.innerHTML = `
+        <div style="display:grid;gap:22px;margin-top:6px">
+
+          <!-- CALCULADORAS -->
+          <div>
+            <div style="font-size:13px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">📁 Calculadoras</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px">
+              ${[
+                { title:'Line Up Marzo 2026',                        icon:'📋', file:'./Calculadoras/Line_Up _marzo_2026.xlsx' },
+                { title:'Calculadora Comisión',                      icon:'💰', file:'./Calculadoras/Calculadora Comisión.xlsx' },
+                { title:'Calculadora Prorrateo Cambio de Ciclo',     icon:'🔄', file:'./Calculadoras/Calculadora Prorrateo Cambio de Ciclo.xlsx' },
+                { title:'Calculadora Prorrateo Cambio de Plan Inmediato', icon:'⚡', file:'./Calculadoras/Calculadora Prorrateo Cambio de Plan Inmediato.xlsx' },
+                { title:'Simulador de Acuerdos de Pago',             icon:'🤝', file:'./Calculadoras/SIMULADOR DE ACUERDOS DE PAGO ORIGINAL.xlsx' }
+              ].map(c=>`
+                <a href="${c.file}" download class="list-item" style="text-decoration:none">
+                  <div class="li-left">
+                    <div class="li-icon">${c.icon}</div>
+                    <div>
+                      <div class="li-title" style="font-size:15px">${c.title}</div>
+                      <div class="li-desc" style="font-size:12px">Clic para descargar · Excel</div>
+                    </div>
+                  </div>
+                  <span class="pill blue">⬇ Descargar</span>
+                </a>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- NEXUS -->
+          <div>
+            <div style="font-size:13px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">🤖 Asistente Virtual</div>
+            <div class="list-item" onclick="window.open('./nexus/Nexus - Asistente virtual.html','_blank')" style="cursor:pointer;max-width:400px">
+              <div class="li-left">
+                <div class="li-icon">🤖</div>
+                <div>
+                  <div class="li-title">Nexus · Asistente Virtual</div>
+                  <div class="li-desc" style="font-size:12px">Abre en nueva pestaña</div>
+                </div>
+              </div>
+              <span class="pill red">Abrir</span>
+            </div>
+          </div>
+
+          <!-- FORMULARIO DESCONEXIONES -->
+          <div>
+            <div style="font-size:13px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">📝 Formularios</div>
+            <div style="display:grid;gap:12px;max-width:720px">
+              <div class="card" style="padding:20px;border-left:4px solid var(--red)">
+                <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap">
+                  <div>
+                    <div style="font-weight:800;font-size:16px;color:var(--blue);margin-bottom:8px">📋 Formulario Desconexiones no Ejecutadas</div>
+                    <ul style="margin:0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.8">
+                      <li>Tiempo de gestión: <strong>72 hrs hábiles</strong> a partir del escalamiento.</li>
+                      <li>Uso exclusivo para <strong>desconexiones no ejecutadas</strong> (servicios principales y adicionales).</li>
+                      <li>Debe diligenciar <strong>soportes y notas</strong> para gestión sin reprocesos.</li>
+                      <li>El formulario anterior salió de uso y <strong>no tendrá más gestión</strong>.</li>
+                    </ul>
+                  </div>
+                  <a href="https://forms.office.com/r/EcpWzXQF4F" target="_blank" rel="noopener noreferrer" class="primary-btn" style="white-space:nowrap;text-decoration:none;display:inline-block">Abrir formulario ↗</a>
+                </div>
+              </div>
+              <div class="card" style="padding:20px;border-left:4px solid #19497c">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+                  <div>
+                    <div style="font-weight:800;font-size:16px;color:var(--blue);margin-bottom:4px">📦 Devolución de Equipos Hogar <span style="font-size:13px;color:var(--muted);font-weight:600">(CAN-DEQ)</span></div>
+                    <div style="font-size:13px;color:var(--muted)">Formulario de devolución de equipos vía Office</div>
+                  </div>
+                  <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=uCK7RixM_0CDYHtjNIISeUEuAggo7mFEp-_9Oh_RVb9UQjVIMkNLQVhaQjFDWE5TTFgzTFlOSFFHRS4u&wdLOR=c2B1C9DBD-4371-4CD0-B361-BE2D79A8D347" target="_blank" rel="noopener noreferrer" class="primary-btn" style="white-space:nowrap;text-decoration:none;display:inline-block">Abrir formulario ↗</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DATOS TECNICOS -->
+          <div>
+            <div style="font-size:13px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">🔑 Datos Técnicos</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;max-width:720px">
+              ${[
+                { label:'OTP',           value:'CVC21.00680',    icon:'🔐' },
+                { label:'Dirección RR',  value:'192.168.5.25',   icon:'🌐' },
+                { label:'Avaya',         value:'10.60.144.100',  icon:'☎️' }
+              ].map(d=>`
+                <div class="card" style="padding:16px 20px;display:flex;align-items:center;gap:14px;cursor:pointer" onclick="navigator.clipboard.writeText('${d.value}').then(()=>{this.querySelector('.copy-hint').textContent='¡Copiado!';setTimeout(()=>{this.querySelector('.copy-hint').textContent='Clic para copiar'},1500)})" title="Clic para copiar">
+                  <div style="font-size:24px">${d.icon}</div>
+                  <div>
+                    <div style="font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em">${d.label}</div>
+                    <div style="font-size:17px;font-weight:900;color:var(--blue);font-family:monospace;letter-spacing:.05em">${d.value}</div>
+                    <div class="copy-hint" style="font-size:11px;color:var(--red-dark);font-weight:700;margin-top:2px">Clic para copiar</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- TABLA CODIGOS ADICIONALES -->
+          <div>
+            <div style="font-size:13px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">📊 Códigos para Adicionales</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px">
+
+              <!-- CAN-1AD -->
+              <div>
+                <div style="font-weight:800;font-size:15px;color:var(--blue);margin-bottom:10px">Marcación Retenido · <span style="color:var(--red-dark)">CAN-1AD</span></div>
+                <div style="overflow-x:auto;border-radius:16px;border:1px solid var(--line)">
+                  <table style="width:100%;border-collapse:collapse;font-size:13px;background:#fff">
+                    <thead>
+                      <tr style="background:var(--red);color:#fff">
+                        <th style="padding:10px 14px;text-align:left;font-weight:800">Servicio</th>
+                        <th style="padding:10px 10px;text-align:center;font-weight:800">SRV</th>
+                        <th style="padding:10px 10px;text-align:center;font-weight:800">CLS</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${[
+                        ['HBO (CANALES)','T','2'],
+                        ['MAX (PLATAFORMA)','@','2'],
+                        ['REVISTA','R','4'],
+                        ['CANALES ADULTOS O HOTPACK','T','5'],
+                        ['PLANES LD','T','6'],
+                        ['PVR','E','7'],
+                        ['INTEL SECURITY','S','9'],
+                        ['PQT INTERNACIONAL','T','12'],
+                        ['WINSPORT+','T','13'],
+                        ['WIFI MESH','@','14'],
+                        ['T-RESUELVE','T','15'],
+                        ['Hogar Seguro','X','16'],
+                        ['UNIVERSAL+','T','17'],
+                        ['GOLDEN PREMIER','T','19'],
+                        ['PRIME VIDEO','@','18'],
+                        ['DISNEY+','@','20'],
+                        ['NETFLIX','@','21'],
+                        ['Edye','G','22'],
+                        ['Picardía Nacional','G','23']
+                      ].map((r,i)=>`
+                        <tr style="background:${i%2===0?'#fff':'#fafbfc'};border-top:1px solid var(--line)">
+                          <td style="padding:9px 14px;font-weight:600">${r[0]}</td>
+                          <td style="padding:9px 10px;text-align:center;font-weight:800">${r[1]}</td>
+                          <td style="padding:9px 10px;text-align:center;font-weight:700">${r[2]}</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- CAN-SCA -->
+              <div>
+                <div style="font-weight:800;font-size:15px;color:var(--blue);margin-bottom:10px">Marcación No Retenido · <span style="color:var(--red-dark)">CAN-SCA</span></div>
+                <div style="overflow-x:auto;border-radius:16px;border:1px solid var(--line)">
+                  <table style="width:100%;border-collapse:collapse;font-size:13px;background:#fff">
+                    <thead>
+                      <tr style="background:var(--red);color:#fff">
+                        <th style="padding:10px 14px;text-align:left;font-weight:800">Servicio</th>
+                        <th style="padding:10px 10px;text-align:center;font-weight:800">SRV</th>
+                        <th style="padding:10px 10px;text-align:center;font-weight:800">CLS</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${[
+                        ['HBO (CANALES)','T','11'],
+                        ['MAX (PLATAFORMA)','@','11'],
+                        ['REVISTA','R','1'],
+                        ['CANALES ADULTOS O HOTPACK','T','2'],
+                        ['PLANES LD','T','3'],
+                        ['PVR','E','4'],
+                        ['INTEL SECURITY','S','8'],
+                        ['PQT INTERNACIONAL','T','14'],
+                        ['WINSPORT+','T','13'],
+                        ['WIFI MESH','@','15'],
+                        ['T-RESUELVE','T','16'],
+                        ['Hogar Seguro','X','17'],
+                        ['UNIVERSAL+','T','18'],
+                        ['GOLDEN PREMIER','T','20'],
+                        ['PRIME VIDEO','@','18', true],
+                        ['DISNEY+','@','22', true],
+                        ['NETFLIX','@','23', true],
+                        ['Edye','G','24', true],
+                        ['Picardía Nacional','G','25', true]
+                      ].map((r,i)=>`
+                        <tr style="background:${r[3]?'#f0fdf4':i%2===0?'#fff':'#fafbfc'};border-top:1px solid var(--line)">
+                          <td style="padding:9px 14px;font-weight:600">${r[0]}</td>
+                          <td style="padding:9px 10px;text-align:center;font-weight:800">${r[1]}</td>
+                          <td style="padding:9px 10px;text-align:center;font-weight:700">${r[2]}</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+                <div style="margin-top:10px;padding:12px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;font-size:12px;color:#166534;line-height:1.6">
+                  <strong>⚠️ Filas en verde</strong> (Prime Video, Disney+, Netflix, Edye, Picardía Nacional): si el servicio fue activado desde la App Mi Claro, <strong>no se puede desactivar por CAN-SCA</strong>. Debe desactivarse desde la App Mi Claro.
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      `;
+    }
+    window.showHerramientas = showHerramientas;
+
+    const simuladoresData = [
+      { id: 'ac',          title: 'AC',                         icon: '💻', url: 'https://view.genially.com/67dade9ae45418f23f2eac5e',                       tipo: 'genially' },
+      { id: 'tickler',     title: 'Crear Tickler',              icon: '🎫', url: 'https://view.genially.com/67dadf5eb43484fb2f6e3b7c',                       tipo: 'genially' },
+      { id: 'crear-pqr',   title: 'Crear PQR',                  icon: '📋', url: 'https://view.genially.com/67dae0f07b6a7aed863ce3a3',                       tipo: 'genially' },
+      { id: 'consul-pqr',  title: 'Consultar PQR',              icon: '🔍', url: 'https://view.genially.com/67dadf883b93d23d8f0f1db7',                       tipo: 'genially' },
+      { id: 'term-pqr',    title: 'Terminación Contrato PQR',   icon: '📄', url: 'https://academi-cosv2.outsourcingcos.com/mod/hvp/embed.php?id=38159',      tipo: 'genially' },
+      { id: 'ascard',      title: 'ASCARD',                     icon: '💳', url: 'https://view.genially.com/67dae488e0c144496143850d',                       tipo: 'genially' },
+      { id: 'smo',         title: 'SMO',                        icon: '📡', url: 'https://view.genially.com/68d177a66dc3f2ab69c7cdd2',                       tipo: 'genially' },
+      { id: 'dime',        title: 'DIME',                       icon: '📊', url: 'https://view.genially.com/68d55b8b3ecaf96763958e1b',                       tipo: 'genially' },
+      { id: 'visor-camp',  title: 'Visor Movilidad Campañas',   icon: '📱', url: 'https://view.genially.com/67dae613e0c1444961450fcf',                       tipo: 'genially' },
+      { id: 'visor-proc',  title: 'Visor Movilidad Procesos',   icon: '⚙️', url: 'https://view.genially.com/65d75d835fa6980014234c5b',                       tipo: 'genially' },
+      { id: 'tyd',         title: 'TYD',                        icon: '🔧', url: 'https://view.genially.com/65399a2902c1d80012967d7e',                       tipo: 'genially' },
+      { id: 'diagnostico', title: 'Diagnosticador',             icon: '🩺', url: 'https://view.genially.com/68d177965a7e3dae22f0cc2b',                       tipo: 'genially' },
+      { id: 'agendamiento',title: 'Agendamiento',               icon: '📅', url: 'https://view.genially.com/64cd1c60c1bfdf0019bcd84a',                       tipo: 'genially' },
+      { id: 'poliedro',    title: 'Poliedro',                   icon: '🔷', url: 'https://view.genially.com/667d8b297f77200014e1dab3',                       tipo: 'genially' },
+      { id: 'rr',          title: 'RR',                         icon: '🗂️', url: 'RRPRUEBAS_2',                                                              tipo: 'html' },
+      { id: 'citybar',     title: 'Citybar - Avaya',            icon: '☎️', url: 'CITYBAR-AVAYA_PRUEBAS',                                                    tipo: 'html' }
+    ];
+
+    function showSimuladores(){
+      setScreen('simuladores');
+      setBreadcrumbs(['Inicio','Simuladores']);
+      document.getElementById('simTitle').textContent = 'Simuladores';
+      document.getElementById('simSubtitle').textContent = 'Selecciona el aplicativo que deseas practicar.';
+      document.getElementById('simBackBtn').onclick = goHome;
+      const content = document.getElementById('simContent');
+      content.innerHTML = `
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:6px">
+          ${simuladoresData.map(sim => `
+            <div class="card menu-card" onclick="openSimulador('${sim.id}')">
+              <div class="menu-icon">${sim.icon}</div>
+              <h3 style="font-size:18px">${escapeHtml(sim.title)}</h3>
+              <div class="pill-row">
+                <span class="pill ${sim.tipo === 'html' ? 'red' : 'blue'}">${sim.tipo === 'html' ? 'HTML' : 'Interactivo'}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    window.openSimulador = (id) => {
+      const sim = simuladoresData.find(s => s.id === id);
+      if (!sim) return;
+      if (sim.tipo === 'html') {
+        window.open(sim.url, '_blank');
+        return;
+      }
+      setScreen('simViewer');
+      setBreadcrumbs(['Inicio','Simuladores', sim.title]);
+      document.getElementById('simViewerTitle').textContent = sim.title;
+      document.getElementById('simViewerBackBtn').onclick = showSimuladores;
+      const iframe = document.getElementById('simIframe');
+      iframe.src = sim.url;
+      const fullBtn = document.getElementById('simFullscreenBtn');
+      const wrap = document.getElementById('simIframeWrap');
+      fullBtn.onclick = () => {
+        if (wrap.requestFullscreen) wrap.requestFullscreen();
+        else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
+      };
+    };
+
+    window.showSimuladores = showSimuladores;
 
     function showConectividad(){
       setScreen('conectividad');
@@ -1880,6 +2215,8 @@
       <button class="quick-menu-btn" type="button" onclick="openTrack('continuas'); closeQuickMenu();">Continuas</button>
       <button class="quick-menu-btn" type="button" onclick="openTrack('preturnos'); closeQuickMenu();">Preturnos</button>
       <button class="quick-menu-btn" type="button" onclick="openTrack('conectividad'); closeQuickMenu();">Conectividad</button>
+      <button class="quick-menu-btn" type="button" onclick="openTrack('simuladores'); closeQuickMenu();">Simuladores</button>
+      <button class="quick-menu-btn" type="button" onclick="openTrack('herramientas'); closeQuickMenu();">Caja de Herramientas</button>
     </div>
     <button class="quick-menu-fab" id="quickMenuFab" type="button" aria-label="Abrir menú">☰</button>
   </div>
